@@ -91,4 +91,5 @@ def rec(username = 'aryantestlist'):
     json_response = []
     for show in range(len(show_list)):
         json_response.append({ids[show]: show_list[show]})  
-    return json_response
+    print(json.dumps(json_response))
+    return json.dumps(json_response)
