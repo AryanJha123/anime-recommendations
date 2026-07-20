@@ -80,4 +80,5 @@ def create_app():
                         total_recs[rec] = recs.index(rec)
         b = dict(sorted(total_recs.items(), key=lambda item: item[1], reverse=True))
         return b
+    
     return app
