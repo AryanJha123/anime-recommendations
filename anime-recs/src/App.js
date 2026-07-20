@@ -3,7 +3,8 @@ import './App.css';
 import { useState } from 'react';
 
 function App() {
-  const [shows, setShows] = useState([]); 
+  const [data, setData] = useState([]); 
+  const [updated, setUpdated] = useState(false);
   async function handleSubmit(e) {
     e.preventDefault();
 
@@ -24,12 +25,13 @@ function App() {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        const data = await response.json();
-        console.log('Success:', data);
+        setData(await response.json());
+        //const jsonObject = JSON.parse(data)
+        console.log('Success:', data[0]);
+        setUpdated(true);
       } catch (error) {
         console.error('Error:', error);
-      }
-      const jsonObject = JSON.parse(data)
+      } 
   }
   return (
     <div className="App">
@@ -50,6 +52,19 @@ function App() {
         >
           Learn React
         </a>
+        {updated ? <div>
+          <table>
+          <tbody>
+          {data.map((entry) => {
+            <tr>
+            <td {...entry[0]}></td>
+            <td {...entry[1]}></td>
+            </tr>
+          })}
+          </tbody>
+          </table>
+          </div>
+        : <div></div>}
       </header>
     </div>
   );
