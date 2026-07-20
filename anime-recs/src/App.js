@@ -3,7 +3,7 @@ import './App.css';
 import { useState } from 'react';
 
 function App() {
-  const [name, setName] = useState(''); 
+  const [shows, setShows] = useState([]); 
   async function handleSubmit(e) {
     e.preventDefault();
 
@@ -24,11 +24,12 @@ function App() {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        const data = await response.json(); // Parses the JSON response from the server
+        const data = await response.json();
         console.log('Success:', data);
       } catch (error) {
         console.error('Error:', error);
       }
+      const jsonObject = JSON.parse(data)
   }
   return (
     <div className="App">
