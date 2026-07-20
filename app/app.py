@@ -10,6 +10,7 @@ app = Flask(__name__)
 @app.route('/')
 def hello():
     print("Hello")
+    return "Hello"
 
 with open(os.path.join(app.root_path, 'matrix.npy'), 'rb') as f:
     cosine_sim = np.load(f)
