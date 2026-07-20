@@ -87,5 +87,5 @@ def rec(username = 'aryantestlist'):
     show_list = list(dict(sorted(total_recs.items(), key=lambda item: item[1], reverse=True)).keys())[0:10]
     json_response = {}
     for show in range(len(show_list)):
-        json_response(show) = show_list[show]
+        json_response[show] = show_list[show]
     return json_response
