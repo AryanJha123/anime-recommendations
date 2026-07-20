@@ -3,11 +3,15 @@ import numpy as np
 import pandas as pd
 import requests
 import json
+import os
 
-with open('/matrix.npy', 'rb') as f:
+
+def create_app(test_config=None):
+    app = Flask(__name__, instance_relative_config=True)
+    with open(os.path.join(app.root_path, 'matrix.npy'), 'rb') as f:
     cosine_sim = np.load(f)
+    indices = pd.read_csv(os.path.join(app.root_path, 'indices.csv'))
 
-indices = pd.read_csv('/indices.csv')
 def get_recommendations(title, a_list, cosine_sim=cosine_sim, num_recommend = 10):
     if title in indices['title_romaji'].values:
         num_recd = 0
@@ -25,8 +29,6 @@ def get_recommendations(title, a_list, cosine_sim=cosine_sim, num_recommend = 10
         movie_indices = [i[0] for i in top_similar]
         return indices['title_romaji'].iloc[movie_indices]
 
-def create_app(test_config=None):
-    app = Flask(__name__, instance_relative_config=True)
     @app.route('/rec')
     def rec(username = 'aryantestlist'):
         query = '''
