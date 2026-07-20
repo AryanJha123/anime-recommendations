@@ -35,7 +35,7 @@ def get_recommendations(title, a_list, cosine_sim=cosine_sim, num_recommend = 10
         movie_indices = [i[0] for i in top_similar]
         return indices['title_romaji'].iloc[movie_indices]
 
-@app.route('/rec')
+@app.route('/rec', methods = ['POST'])
 def rec(username = 'aryantestlist'):
     query = '''
     query ($type: MediaType!, $userName: String!) {
