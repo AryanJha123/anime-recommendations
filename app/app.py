@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 import numpy as np
 import pandas as pd
 import requests
@@ -6,6 +7,7 @@ import json
 import os
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/')
 def hello():
