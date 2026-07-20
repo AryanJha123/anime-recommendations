@@ -90,6 +90,6 @@ def rec(username = 'aryantestlist'):
         ids.append(indices[indices['title_romaji'] == j]['id'].values[0])
     json_response = []
     for show in range(len(show_list)):
-        json_response.append({ids[show]: show_list[show]})  
+        json_response.append({int(ids[show]): show_list[show]})  
     print(json.dumps(json_response))
     return json.dumps(json_response)
