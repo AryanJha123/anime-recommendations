@@ -3,7 +3,6 @@ import numpy as np
 import pandas as pd
 import requests
 import json
-import os
 
 with open('/matrix.npy', 'rb') as f:
     cosine_sim = np.load(f)
@@ -28,10 +27,6 @@ def get_recommendations(title, a_list, cosine_sim=cosine_sim, num_recommend = 10
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
-    app.config.from_mapping(
-        SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'flask.sqlite'),
-    )
     @app.route('/rec')
     def rec(username = 'aryantestlist'):
         query = '''
