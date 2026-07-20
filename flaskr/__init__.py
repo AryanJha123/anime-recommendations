@@ -9,25 +9,25 @@ import os
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     with open(os.path.join(app.root_path, 'matrix.npy'), 'rb') as f:
-    cosine_sim = np.load(f)
+        cosine_sim = np.load(f)
     indices = pd.read_csv(os.path.join(app.root_path, 'indices.csv'))
 
-def get_recommendations(title, a_list, cosine_sim=cosine_sim, num_recommend = 10):
-    if title in indices['title_romaji'].values:
-        num_recd = 0
-        raw_recd = 1
-        top_similar = []
-        idx = (indices['title_romaji'] == title).idxmax()
-        sim_scores = list(enumerate(cosine_sim[idx]))
-        sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-        while num_recd <= num_recommend:
-            top_rec = sim_scores[raw_recd]
-            if indices['title_romaji'].iloc[top_rec[0]] not in a_list and "Season" not in indices['title_romaji'].iloc[top_rec[0]]:
-                top_similar.append(sim_scores[raw_recd])
-                num_recd += 1
-            raw_recd += 1
-        movie_indices = [i[0] for i in top_similar]
-        return indices['title_romaji'].iloc[movie_indices]
+    def get_recommendations(title, a_list, cosine_sim=cosine_sim, num_recommend = 10):
+        if title in indices['title_romaji'].values:
+            num_recd = 0
+            raw_recd = 1
+            top_similar = []
+            idx = (indices['title_romaji'] == title).idxmax()
+            sim_scores = list(enumerate(cosine_sim[idx]))
+            sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+            while num_recd <= num_recommend:
+                top_rec = sim_scores[raw_recd]
+                if indices['title_romaji'].iloc[top_rec[0]] not in a_list and "Season" not in indices['title_romaji'].iloc[top_rec[0]]:
+                    top_similar.append(sim_scores[raw_recd])
+                    num_recd += 1
+                raw_recd += 1
+            movie_indices = [i[0] for i in top_similar]
+            return indices['title_romaji'].iloc[movie_indices]
 
     @app.route('/rec')
     def rec(username = 'aryantestlist'):
