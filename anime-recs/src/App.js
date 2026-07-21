@@ -23,10 +23,10 @@ function App() {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-
-        setData(await response.json());
+        //var parsed = JSON.parse(await response.json()) 
+        setData(JSON.parse(await response.json()));
         //const jsonObject = JSON.parse(data)
-        console.log('Success:', data[0]);
+        console.log('Success:', data);
       } catch (error) {
         console.error('Error:', error);
       } 
