@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import './output.css'
 import { useState } from 'react';
 
 function App() {
@@ -24,7 +25,7 @@ function App() {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         //var parsed = JSON.parse(await response.json()) 
-        setData(JSON.parse(await response.json()));
+        setData(await response.json());
         //const jsonObject = JSON.parse(data)
         console.log('Success:', data);
       } catch (error) {
@@ -34,22 +35,20 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <form onSubmit={handleSubmit}>
-        <input/>
-        <button type="submit">Submit</button>
+        <form onSubmit={handleSubmit} className="flex gap-10">
+        <input className="text-black px-4 rounded-lg"/>
+        <button className="bg-black px-4 py-2 rounded-xl" type="submit">Submit</button>
         </form>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <ul>
+        {data.map((user) => (
+          <li key={user.id}>
+            <a className="h-auto mt-auto mb-auto" href={"https://anilist.co/anime/"+user.id} target="_blank" 
+            rel="noopener noreferrer">
+            <p>{user.name}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
       </header>
     </div>
   );
