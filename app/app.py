@@ -46,7 +46,7 @@ def rec(username = 'aryantestlist'):
             id
             media {
                 title {
-                romaji
+                    romaji
                 }
             }
             }

@@ -4,14 +4,13 @@ import './output.css'
 import { useState } from 'react';
 
 function App() {
-  const [data, setData] = useState([]); 
+  const [data, setData] = useState([]);
+  const [images, setImages] = useState([]); 
   async function handleSubmit(e) {
     e.preventDefault();
 
     const form = e.target;
     const formData = new FormData(form);
-
-    // You can pass formData as a fetch body directly:
     try {
         const response = await fetch('https://anime-recommendations-lrvg.onrender.com/rec', {
           method: 'POST', 
@@ -24,13 +23,50 @@ function App() {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        //var parsed = JSON.parse(await response.json()) 
         setData(await response.json());
-        //const jsonObject = JSON.parse(data)
+        imageGet(data);
         console.log('Success:', data);
       } catch (error) {
         console.error('Error:', error);
       } 
+  }
+  async function imageGet(data){
+    var imageArray = [];
+    for(let i = 0; i < data.length; i++){
+      var query = `
+        query ($id: Int) { # Define which variables will be used in the query (id)
+          Media (id: $id, type: ANIME) { # Insert our variables into the query arguments (id) (type: ANIME is hard-coded in the query)
+            coverImage {
+              large
+            }
+          }
+        }
+        `
+      var variables = {id: data[i].id};
+
+      try {
+          const response = await fetch('https://graphql.anilist.co', {
+            method: 'POST', 
+            headers: {
+              'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify({
+              query: query,
+              variables: variables
+            })
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          imageArray.push(await response.json()['data'])
+          console.log(imageArray)
+          console.log('Success:', data);
+        } catch (error) {
+          console.error('Error:', error);
+        } 
+    }
+    setImages(imageArray);
   }
   return (
     <div className="App">
