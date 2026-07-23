@@ -85,11 +85,8 @@ def rec(username = 'aryantestlist'):
                 else:
                     total_recs[rec] = recs.index(rec)
     show_list = list(dict(sorted(total_recs.items(), key=lambda item: item[1], reverse=True)).keys())[0:10]
-    ids = []
-    for j in show_list:
-        ids.append(indices[indices['title_romaji'] == j]['id'].values[0])
     json_response = []
     for show in range(len(show_list)):
-        json_response.append({"id": int(ids[show]), "name": show_list[show]})
+        json_response.append({"id": int(indices[indices['title_romaji'] == j]['id'].values[0]), "name": show_list[show], "pic": indices[indices['title_romaji'] == j]['coverImage_large'].values[0]})
     print(json.dumps(json_response))
     return json.dumps(json_response)

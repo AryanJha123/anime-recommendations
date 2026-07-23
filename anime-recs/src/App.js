@@ -30,44 +30,6 @@ function App() {
         console.error('Error:', error);
       } 
   }
-  async function imageGet(data){
-    var imageArray = [];
-    for(let i = 0; i < data.length; i++){
-      var query = `
-        query ($id: Int) { # Define which variables will be used in the query (id)
-          Media (id: $id, type: ANIME) { # Insert our variables into the query arguments (id) (type: ANIME is hard-coded in the query)
-            coverImage {
-              large
-            }
-          }
-        }
-        `
-      var variables = {id: data[i].id};
-
-      try {
-          const response = await fetch('https://graphql.anilist.co', {
-            method: 'POST', 
-            headers: {
-              'Content-Type': 'application/json' 
-            },
-            body: JSON.stringify({
-              query: query,
-              variables: variables
-            })
-          });
-
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-          imageArray.push(await response.json()['data'])
-          console.log(imageArray)
-          console.log('Success:', data);
-        } catch (error) {
-          console.error('Error:', error);
-        } 
-    }
-    setImages(imageArray);
-  }
   return (
     <div className="App">
       <header className="App-header">
