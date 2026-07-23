@@ -23,7 +23,7 @@ def get_recommendations(title, a_list, cosine_sim=cosine_sim, num_recommend = 10
         num_recd = 0
         raw_recd = 1
         top_similar = []
-        idx = (indices['title_romaji'] == title).idxmax()
+        idx = indices.index[indices['title_romaji'] == title].values[0]
         sim_scores = list(enumerate(cosine_sim[idx]))
         sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
         while num_recd <= num_recommend:
@@ -87,6 +87,6 @@ def rec(username = 'aryantestlist'):
     show_list = list(dict(sorted(total_recs.items(), key=lambda item: item[1], reverse=True)).keys())[0:10]
     json_response = []
     for show in range(len(show_list)):
-        json_response.append({"id": int(indices[indices['title_romaji'] == j]['id'].values[0]), "name": show_list[show], "pic": indices[indices['title_romaji'] == j]['coverImage_large'].values[0]})
-    print(json.dumps(json_response))
+        json_response.append({"id": int(indices[indices['title_romaji'] == show_list[show]]['id'].values[0]), "name": show_list[show], "pic": indices[indices['title_romaji'] == show_list[show]]['coverImage_large'].values[0]})
+    #json.dumps(json_response)
     return json.dumps(json_response)

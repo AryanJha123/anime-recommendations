@@ -24,7 +24,6 @@ function App() {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         setData(await response.json());
-        imageGet(data);
         console.log('Success:', data);
       } catch (error) {
         console.error('Error:', error);
@@ -38,11 +37,12 @@ function App() {
         <button className="bg-black px-4 py-2 rounded-xl" type="submit">Submit</button>
         </form>
         <ul>
-        {data.map((user) => (
-          <li key={user.id}>
-            <a className="h-auto mt-auto mb-auto" href={"https://anilist.co/anime/"+user.id} target="_blank" 
+        {data.map((show) => (
+          <li key={show.id}>
+            <a className="h-auto mt-auto mb-auto" href={"https://anilist.co/anime/"+show.id} target="_blank" 
             rel="noopener noreferrer">
-            <p>{user.name}</p>
+            <p>{show.name}</p>
+            <img src={show.pic}/>
             </a>
           </li>
         ))}
