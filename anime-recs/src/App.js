@@ -67,7 +67,7 @@ function App() {
             </div>
             <div className='mx-auto lg:gap-24 gap-4 flex flex-col text-black w-36'>
               <p className="font-lato font-bold underline text-xl">Most similar to:</p>
-              <p className='text-xl'>asdf</p>
+              <p className='text-xl'>{show.similar}</p>
             </div>
             </div>
           </div>

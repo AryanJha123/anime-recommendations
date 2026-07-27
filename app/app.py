@@ -91,7 +91,7 @@ def rec(username = 'aryantestlist'):
         sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
         for j in sim_scores:
             if indices.iloc[j[0]]['title_romaji'] in a_list:
-                print(indices.iloc[j[0]]['title_romaji'])
+               return indices.iloc[j[0]]['title_romaji']
     similarities = []
     for j in show_list:
         similarities.append(find_similarity(j, anime_list))
