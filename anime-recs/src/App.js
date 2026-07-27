@@ -53,13 +53,17 @@ function App() {
               <p className="font-bold underline text-xl"> <br/></p>
               <p className="text-2xl">{data.indexOf(show)+1}</p>
             </div>
-            <div className='mx-auto lg:gap-24 gap-4 flex flex-col text-black w-24'>
+            <div className='mx-auto lg:gap-4 gap-4 flex flex-col text-black w-24'>
               <p className="font-bold underline text-xl">Genres</p>
-              <p className='text-xl'>asdf</p>
+              {show.genres.split(',').map((genre) =>(
+                <p className='text-xl leading-none'>{[...genre].filter(char => !["'", ",", "[", "]"].includes(char)).join("")}</p> 
+              ))}
             </div>
-            <div className='mx-auto lg:gap-24 gap-4 flex flex-col text-black w-24'>
+            <div className='mx-auto lg:gap-4 gap-4 flex flex-col text-black w-24'>
               <p className="font-bold underline text-xl">Tags</p>
-              <p className='text-xl'>asdf</p>
+              {show.tags.split(',').map((tag) =>(
+                <p className='text-xl leading-none'>{[...tag].filter(char => !["'", ",", "[", "]"].includes(char)).join("")}</p> 
+              ))}
             </div>
             <div className='mx-auto lg:gap-24 gap-4 flex flex-col text-black w-36'>
               <p className="font-lato font-bold underline text-xl">Most similar to:</p>

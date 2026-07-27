@@ -85,8 +85,18 @@ def rec(username = 'aryantestlist'):
                 else:
                     total_recs[rec] = recs.index(rec)
     show_list = list(dict(sorted(total_recs.items(), key=lambda item: item[1], reverse=True)).keys())[0:10]
+    def find_similarity(title, a_list, cosine_sim=cosine_sim):
+        idx = indices.index[indices['title_romaji'] == title].values[0]
+        sim_scores = list(enumerate(cosine_sim[idx]))
+        sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+        for j in sim_scores:
+            if indices.iloc[j[0]]['title_romaji'] in a_list:
+                print(indices.iloc[j[0]]['title_romaji'])
+    similarities = []
+    for j in show_list:
+        similarities.append(find_similarity(j, anime_list))
     json_response = []
     for show in range(len(show_list)):
-        json_response.append({"id": int(indices[indices['title_romaji'] == show_list[show]]['id'].values[0]), "name": show_list[show], "pic": indices[indices['title_romaji'] == show_list[show]]['coverImage_large'].values[0], 'genres':indices[indices['title_romaji'] == show_list[show]]['genres'].values[0], 'tags':indices[indices['title_romaji'] == show_list[show]]['tags'].values[0]})
+        json_response.append({"id": int(indices[indices['title_romaji'] == show_list[show]]['id'].values[0]), "name": show_list[show], "pic": indices[indices['title_romaji'] == show_list[show]]['coverImage_large'].values[0], 'genres':indices[indices['title_romaji'] == show_list[show]]['genres'].values[0], 'tags':indices[indices['title_romaji'] == show_list[show]]['tags'].values[0], 'similar':similarities[show]})
     #json.dumps(json_response)
     return json.dumps(json_response)
