@@ -53,42 +53,42 @@ function App() {
         </button>
       </section>
 
-      <form onSubmit={handleSubmit} className="flex gap-10">
-        <input className="text-black px-4 rounded-lg"/>
+      <form onSubmit={handleSubmit} className="flex mx-auto gap-10 ">
+        <input className="text-white px-4 rounded-lg"/>
         <button className="bg-black px-4 py-2 rounded-xl" type="submit">Submit</button>
       </form>
 
       <div className="ticks"></div>
       <div className="outer-div bg-black">
         {data.map((show) => (
-          <div key={show.id} className={`px-4 relative flex lg:flex-row flex-col lg:gap-24 ${data.indexOf(show) % 2 == 0 ? 'bg-green-100' : 'bg-blue-100'}`}>
-            <a className="h-auto mt-auto mb-auto" href={"https://anilist.co/anime/"+show.id} target="_blank" rel="noopener noreferrer">
-                <div>
-                  <img src={show.pic} className='relative w-64 lg:mt-0 mx-auto mt-4'/>
-                  <div className='lg:absolute lg:mx-0 mx-auto bg-gray-600 z-10 w-64 h-24 bottom-0 flex py-4 px-4 overflow-hidden bg-opacity-70'>
-                    <p className="my-auto mx-auto text-white">{show.name}</p>
+          <div key={show.id} className={`px-8 relative flex lg:flex-row flex-col ${data.indexOf(show) % 2 == 0 ? 'bg-gray-800' : 'bg-gray-700'}`}>
+            <div className='lg:ml-4 lg:mr-16 mx-auto lg:gap-24 flex flex-col text-white w-8'>
+              <p className="font-bold underline text-xl"> <br/></p>
+              <p className="text-2xl w-8">{data.indexOf(show)+1}</p>
+            </div>
+            <a className="h-auto mt-auto mb-auto mx-auto lg:mr-24" href={"https://anilist.co/anime/"+show.id} target="_blank" rel="noopener noreferrer">
+                <div className="w-48">
+                  <img src={show.pic} className='relative w-full lg:mt-0 mx-auto mt-4'/>
+                  <div className='lg:mx-0 flex flex-col bg-gray-600 z-10 h-24 w-full bottom-0 py-3 px-4 bg-opacity-70'>
+                    <p className="my-auto mx-auto text-white line-clamp-3 h-full">{show.name}</p>
                   </div>
                 </div>
             </a>
             <div className="relative flex lg:flex-row flex-col lg:gap-24 gap-8 pt-8 pb-8">
-            <div className='mx-auto lg:gap-24 flex flex-col text-black w-24'>
-              <p className="font-bold underline text-xl"> <br/></p>
-              <p className="text-2xl">{data.indexOf(show)+1}</p>
-            </div>
-            <div className='mx-auto lg:gap-4 gap-4 flex flex-col text-black w-24'>
+            <div className='mx-auto gap-4 flex flex-col text-white lg:w-24 w-48'>
               <p className="font-bold underline text-xl">Genres</p>
               {show.genres.split(',').map((genre) =>(
                 <p className='text-xl leading-none'>{[...genre].filter(char => !["'", ",", "[", "]"].includes(char)).join("")}</p> 
               ))}
             </div>
-            <div className='mx-auto lg:gap-4 gap-4 flex flex-col text-black w-24'>
+            <div className='mx-auto gap-4 flex flex-col text-white lg:w-24 w-48'>
               <p className="font-bold underline text-xl">Tags</p>
               {show.tags.split(',').map((tag) =>(
                 <p className='text-xl leading-none'>{[...tag].filter(char => !["'", ",", "[", "]"].includes(char)).join("")}</p> 
               ))}
             </div>
-            <div className='mx-auto lg:gap-24 gap-4 flex flex-col text-black w-36'>
-              <p className="font-lato font-bold underline text-xl">Most similar to:</p>
+            <div className='mx-auto gap-4 flex flex-col text-white lg:w-24 w-48'>
+              <p className="font-bold underline text-xl">Most similar to:</p>
               <p className='text-xl'>{show.similar}</p>
             </div>
             </div>
