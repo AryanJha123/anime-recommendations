@@ -1,11 +1,12 @@
-import logo from './logo.svg';
-import './App.css';
-import './output.css'
-import { useState } from 'react';
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from './assets/vite.svg'
+import heroImg from './assets/hero.png'
+import './App.css'
 
 function App() {
+  const [count, setCount] = useState(0)
   const [data, setData] = useState([]);
-  const [images, setImages] = useState([]); 
   async function handleSubmit(e) {
     e.preventDefault();
 
@@ -30,13 +31,34 @@ function App() {
       } 
   }
   return (
-    <div className="App">
-      <header className="App-header">
-        <form onSubmit={handleSubmit} className="flex gap-10">
+    <>
+      <section id="center">
+        <div className="hero">
+          <img src={heroImg} className="base" width="170" height="179" alt="" />
+          <img src={reactLogo} className="framework" alt="React logo" />
+          <img src={viteLogo} className="vite" alt="Vite logo" />
+        </div>
+        <div>
+          <h1>Get started</h1>
+          <p>
+            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
+          </p>
+        </div>
+        <button
+          type="button"
+          className="counter"
+          onClick={() => setCount((count) => count + 1)}
+        >
+          Count is {count}
+        </button>
+      </section>
+
+      <form onSubmit={handleSubmit} className="flex gap-10">
         <input className="text-black px-4 rounded-lg"/>
         <button className="bg-black px-4 py-2 rounded-xl" type="submit">Submit</button>
-        </form> 
-      </header>
+      </form>
+
+      <div className="ticks"></div>
       <div className="outer-div bg-black">
         {data.map((show) => (
           <div key={show.id} className={`px-4 relative flex lg:flex-row flex-col lg:gap-24 ${data.indexOf(show) % 2 == 0 ? 'bg-green-100' : 'bg-blue-100'}`}>
@@ -73,8 +95,9 @@ function App() {
           </div>
         ))}
     </div>
-    </div>
-  );
+      <section id="spacer"></section>
+    </>
+  )
 }
 
-export default App;
+export default App
