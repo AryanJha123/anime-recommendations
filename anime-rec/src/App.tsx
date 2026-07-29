@@ -2,10 +2,12 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
+import { Link } from "react-router-dom";
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+  var username = '';
   const [data, setData] = useState([]);
   async function handleSubmit(e) {
     e.preventDefault();
@@ -20,7 +22,7 @@ function App() {
           },
           body: formData
         });
-
+        console.log(formData);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -55,7 +57,10 @@ function App() {
 
       <form onSubmit={handleSubmit} className="flex mx-auto gap-10 ">
         <input className="text-white px-4 rounded-lg"/>
-        <button className="bg-black px-4 py-2 rounded-xl" type="submit">Submit</button>
+        
+        <Link to='/results/' state={username}>
+        <button className="bg-black px-4 py-2 rounded-xl">Submit</button>
+        </Link>
       </form>
 
       <div className="ticks"></div>

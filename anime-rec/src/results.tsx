@@ -1,0 +1,83 @@
+import './App.css'
+import { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom';
+
+function results() {
+  const location = useLocation();
+  const username = location.state;
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    async function handleSubmit(user) {
+        try {
+            const response = await fetch('https://anime-recommendations-lrvg.onrender.com/rec', {
+                method: 'POST', 
+                headers: {
+                'Content-Type': 'application/json' 
+            },
+                body: user
+            });
+
+            if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            setData(await response.json());
+            console.log('Success:', data);
+        } catch (error) {
+            console.error('Error:', error);
+        } 
+    }
+    handleSubmit(username);
+  }, [])
+  
+  
+  return (
+    <>
+    {username && data.length < 1 && <div className='my-auto'>
+        <p>Loading...</p>
+        </div>}
+    {data.length > 0 &&
+      <div className="outer-div py-8">
+        <p className="text-2xl mx-auto mb-8">Your Recommendations:</p>
+        <div className="mt-8">
+        {data.map((show) => (
+          <div key={show.id} className={`px-8 relative flex lg:flex-row flex-col ${data.indexOf(show) % 2 == 0 ? 'bg-gray-800' : 'bg-gray-700'}`}>
+            <div className='lg:ml-4 lg:mr-16 mx-auto lg:gap-24 flex flex-col text-white w-8'>
+              <p className="font-bold underline text-xl"> <br/></p>
+              <p className="text-2xl w-8">{data.indexOf(show)+1}</p>
+            </div>
+            <a className="h-auto mt-auto mb-auto lg:mr-auto" href={"https://anilist.co/anime/"+show.id} target="_blank" rel="noopener noreferrer">
+                <div className="w-48">
+                  <img src={show.pic} className='relative w-full lg:mt-0 mx-auto mt-4'/>
+                  <div className='lg:mx-0 flex flex-col bg-gray-600 z-10 h-24 w-full bottom-0 py-3 px-4 bg-opacity-70'>
+                    <p className="my-auto mx-auto text-white line-clamp-3 h-full">{show.name}</p>
+                  </div>
+                </div>
+            </a>
+            <div className="relative flex lg:flex-row flex-col lg:gap-24 mr-16 gap-8 pt-8 pb-8">
+            <div className='mx-auto gap-4 flex flex-col text-white lg:w-24 w-48'>
+              <p className="font-bold underline text-xl">Genres</p>
+              {show.genres.split(',').map((genre) =>(
+                <p className='text-xl leading-none'>{[...genre].filter(char => !["'", ",", "[", "]"].includes(char)).join("")}</p> 
+              ))}
+            </div>
+            <div className='mx-auto gap-4 flex flex-col text-white lg:w-24 w-48'>
+              <p className="font-bold underline text-xl">Tags</p>
+              {show.tags.split(',').map((tag) =>(
+                <p className='text-xl leading-none'>{[...tag].filter(char => !["'", ",", "[", "]"].includes(char)).join("")}</p> 
+              ))}
+            </div>
+            <div className='mx-auto gap-4 flex flex-col text-white lg:w-24 w-48'>
+              <p className="font-bold underline text-xl">Most similar to:</p>
+              <p className='text-xl'>{show.similar}</p>
+            </div>
+            </div>
+          </div>
+        ))}
+        </div>
+    </div>
+    }
+    </>
+  )
+}
+
+export default results
