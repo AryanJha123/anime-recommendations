@@ -1,21 +1,20 @@
 import './App.css'
 import { useState, useEffect } from 'react'
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { motion } from "motion/react";
 
 function results() {
-  const location = useLocation();
-  const username = location.state;
+  const { user }  = useParams();
   const [data, setData] = useState([]);
   useEffect(() => {
-    async function handleSubmit(user) {
+    async function handleSubmit(username) {
         try {
             const response = await fetch('https://anime-recommendations-lrvg.onrender.com/rec', {
                 method: 'POST', 
                 headers: {
                 'Content-Type': 'application/json' 
             },
-                body: user
+                body: username
             });
 
             if (!response.ok) {
@@ -27,18 +26,19 @@ function results() {
             console.error('Error:', error);
         } 
     }
-    handleSubmit(username);
+    handleSubmit(user);
   }, [])
   
   
   return (
     <>
-    {username && data.length < 1 && <div className='my-auto'>
+    {user && data.length < 1 && <div className='my-auto'>
         <p>Loading...</p>
         </div>}
     {data.length > 0 &&
       <div className="outer-div lg: pb-8">
-        <h1 className="text-2xl mx-auto mb-8">Your Recommendations:</h1>
+        <h1 className="text-2xl mx-auto">Your Recommendations:</h1>
+        <p>Profile: <a className='text-blue-200' href={"https://anilist.co/user/"+user}>{user}</a></p>
         <div className="mt-8">
         {data.map((show, index) => (
           <motion.div initial={{ x: -2000 }} animate={{ x: 0 }} transition={{ ease: "easeOut", duration: 0.3, delay:index*0.3 }} key={index} className={`px-8 relative flex lg:flex-row flex-col ${data.indexOf(show) % 2 == 0 ? 'bg-gray-800' : 'bg-gray-700'}`}>

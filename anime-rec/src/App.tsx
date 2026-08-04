@@ -1,5 +1,3 @@
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
 import heroImg from '/AniList_logo.svg'
 import { Link } from "react-router-dom";
 import './App.css'
@@ -22,12 +20,11 @@ function App() {
       <section className="flex flex-col gap-2">
           <div className="flex mx-auto">
             <input className="text-white px-4 rounded-lg outline-white outline-solid outline-1" placeholder="Username"/>
-            
-            <Link to='/results/' state={username}>
+            <a href={'/results/'+username}>
             <button className="bg-black px-4 py-2 rounded-xl">Submit</button>
-            </Link>
+            </a>
           </div>
-        <p>Don't have an account? Try this <Link className="text-blue-200" to='/results/' state='aryantestlist'>sample.</Link></p>
+        <p>Don't have an account? Try this <a className="text-blue-200" href='/results/aryantestlist'>sample.</a></p>
       </section>
       <section className="mt-20" id="spacer"></section>
     </>
