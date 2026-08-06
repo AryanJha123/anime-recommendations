@@ -18,10 +18,10 @@ function App() {
       </section>
       <section className="flex flex-col gap-2">
           <div className="flex mx-auto">
-            <input className="text-white px-4 rounded-lg outline-white outline-solid outline-1" placeholder="Username"/>
-            <a href={'/results/'+username}>
-            <button className="bg-black px-4 py-2 rounded-xl">Submit</button>
-            </a>
+            <form action={"/results/"+username}>
+            <input className="text-white px-4 rounded-lg outline-white outline-solid outline-1" placeholder="Username" required/>
+            <button className="bg-black px-4 py-2 rounded-xl" type="submit">Submit</button>
+            </form>
           </div>
         <p>Don't have an account? Try this <a className="text-blue-200" href='/results/aryantestlist'>sample.</a></p>
       </section>
