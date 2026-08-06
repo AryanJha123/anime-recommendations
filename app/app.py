@@ -38,7 +38,7 @@ def get_recommendations(title, a_list, cosine_sim=cosine_sim, num_recommend = 10
 
 @app.route('/rec', methods = ['POST'])
 def rec():
-    username = request.form['username']
+    username = str(request.data.decode())
     query = '''
     query ($type: MediaType!, $userName: String!) {
         MediaListCollection(type: $type, userName: $userName) {
@@ -79,13 +79,14 @@ def rec():
     
     total_recs = {}
     for title in anime_list:  
-        recs = list(get_recommendations(title, anime_list, num_recommend = 10))
-        for rec in recs:
-            if rec not in anime_list:
-                if rec in total_recs:
-                    total_recs[rec] += recs.index(rec)
-                else:
-                    total_recs[rec] = recs.index(rec)
+        if title in indices['title_romaji'].values:
+            recs = list(get_recommendations(title, anime_list, num_recommend = 10))
+            for rec in recs:
+                if rec not in anime_list:
+                    if rec in total_recs:
+                        total_recs[rec] += recs.index(rec)
+                    else:
+                        total_recs[rec] = recs.index(rec)
     show_list = list(dict(sorted(total_recs.items(), key=lambda item: item[1], reverse=True)).keys())[0:10]
     def find_similarity(title, a_list, cosine_sim=cosine_sim):
         idx = indices.index[indices['title_romaji'] == title].values[0]

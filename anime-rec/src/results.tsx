@@ -17,7 +17,9 @@ function results() {
   useEffect(() => {
     async function handleSubmit(username: string) {
         try {
-            const response = await fetch('https://anime-recommendations-lrvg.onrender.com/rec', {
+            const response = await 
+            //fetch('https://anime-recommendations-lrvg.onrender.com/rec', {
+            fetch('http://127.0.0.1:5000/rec', {
                 method: 'POST', 
                 headers: {
                 'Content-Type': 'application/json' 
