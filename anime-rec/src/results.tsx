@@ -4,10 +4,18 @@ import { useParams } from 'react-router-dom';
 import { motion } from "motion/react";
 
 function results() {
-  const { user }  = useParams();
-  const [data, setData] = useState([]);
+  const { user = '' }  = useParams();
+  interface Show {
+    id: string;
+    pic: string;
+    name: string;
+    genres: string;
+    tags: string;
+    similar: string;
+  }
+  const [data, setData] = useState<Show[]>([]);
   useEffect(() => {
-    async function handleSubmit(username) {
+    async function handleSubmit(username: string) {
         try {
             const response = await fetch('https://anime-recommendations-lrvg.onrender.com/rec', {
                 method: 'POST', 
@@ -41,7 +49,7 @@ function results() {
         <p>Profile: <a className='text-blue-200' href={"https://anilist.co/user/"+user}>{user}</a></p>
         <div className="mt-8">
         {data.map((show, index) => (
-          <motion.div initial={{ x: -2000 }} animate={{ x: 0 }} transition={{ ease: "easeOut", duration: 0.3, delay:index*0.3 }} key={index} className={`px-8 relative flex lg:flex-row flex-col ${data.indexOf(show) % 2 == 0 ? 'bg-gray-800' : 'bg-gray-700'}`}>
+          <motion.div initial={{ x: -2000 }} animate={{ x: 0 }} transition={{ ease: "easeOut", duration: 0.3, delay:index*0.3 }} key={index} className={`px-8 relative flex lg:flex-row flex-col ${index % 2 == 0 ? 'bg-gray-800' : 'bg-gray-700'}`}>
             <div className='lg:ml-4 lg:mr-16 mx-auto lg:gap-24 flex flex-col text-white w-8'>
               <p className="font-bold underline text-xl"> <br/></p>
               <p className="text-2xl w-8">{data.indexOf(show)+1}</p>

@@ -1,5 +1,4 @@
 import heroImg from '/AniList_logo.svg'
-import { Link } from "react-router-dom";
 import './App.css'
 
 function App() {
