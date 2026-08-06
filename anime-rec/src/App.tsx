@@ -1,8 +1,16 @@
 import heroImg from '/AniList_logo.svg'
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import './App.css'
 
 function App() {
-  var username = '';
+  const [username, setUsername] = useState("");
+  const navigate = useNavigate();
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    navigate(`/results/${username}`);
+  }
   return (
     <>
       <section id="center">
@@ -18,8 +26,11 @@ function App() {
       </section>
       <section className="flex flex-col gap-2">
           <div className="flex mx-auto">
-            <form action={"/results/"+username}>
-            <input className="text-white px-4 rounded-lg outline-white outline-solid outline-1" placeholder="Username" required/>
+            <form onSubmit={handleSubmit}>
+            <input id="userInput" className="text-white px-4 rounded-lg outline-white outline-solid outline-1" 
+              placeholder="Username" value={username}
+              onChange={(e) => setUsername(e.target.value)} 
+              required/>
             <button className="bg-black px-4 py-2 rounded-xl" type="submit">Submit</button>
             </form>
           </div>

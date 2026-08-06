@@ -36,7 +36,7 @@ def get_recommendations(title, a_list, cosine_sim=cosine_sim, num_recommend = 10
         return indices['title_romaji'].iloc[movie_indices]
 
 @app.route('/rec', methods = ['POST'])
-def rec(username = 'aryantestlist'):
+def rec(username):
     query = '''
     query ($type: MediaType!, $userName: String!) {
         MediaListCollection(type: $type, userName: $userName) {
