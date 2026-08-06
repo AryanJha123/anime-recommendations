@@ -1,4 +1,5 @@
 from flask import Flask
+from flask import request
 from flask_cors import CORS
 import numpy as np
 import pandas as pd
@@ -36,7 +37,8 @@ def get_recommendations(title, a_list, cosine_sim=cosine_sim, num_recommend = 10
         return indices['title_romaji'].iloc[movie_indices]
 
 @app.route('/rec', methods = ['POST'])
-def rec(username):
+def rec():
+    username = request.form['username']
     query = '''
     query ($type: MediaType!, $userName: String!) {
         MediaListCollection(type: $type, userName: $userName) {
