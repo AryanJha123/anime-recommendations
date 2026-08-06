@@ -45,9 +45,14 @@ function results() {
         <p>Loading...</p>
         </div>}
     {data.length > 0 &&
-      <div className="outer-div lg: pb-8">
+      <div className="outer-div flex flex-col lg:pb-8">
         <h1 className="text-2xl mx-auto">Your Recommendations:</h1>
-        <p>Profile: <a className='text-blue-200' href={"https://anilist.co/user/"+user}>{user}</a></p>
+        <div className='mx-auto'>
+            <div className="flex flex-row gap-8">
+            <p className='mx-auto'><a className="text-blue-200 " href={'/'}>Home</a></p>
+            <p className="mx-auto">Profile: <a className='text-blue-200' href={"https://anilist.co/user/"+user}>{user}</a></p>
+            </div>
+        </div>
         <div className="mt-8">
         {data.map((show, index) => (
           <motion.div initial={{ x: -2000 }} animate={{ x: 0 }} transition={{ ease: "easeOut", duration: 0.3, delay:index*0.3 }} key={index} className={`px-8 relative flex lg:flex-row flex-col ${index % 2 == 0 ? 'bg-gray-800' : 'bg-gray-700'}`}>
