@@ -5,6 +5,9 @@ A simple React + Flask project that recommends anime to a user based on their An
 Data seems to be up to the end of 2025, so new entries are not included.
 
 # Structure
-anime-rec: the frontend
+anime-rec: the frontend 
+
 app: the backend
+
 data collection: the jupyter notebook used to create the cosine matrix and trim the dataset to a usable size for the backend
+
