@@ -1,6 +1,7 @@
 import './App.css'
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { motion } from "motion/react";
 
 function results() {
@@ -13,6 +14,7 @@ function results() {
     tags: string;
     similar: string;
   }
+  const navigate = useNavigate();
   const [data, setData] = useState<Show[]>([]);
   useEffect(() => {
     async function handleSubmit(username: string) {
@@ -27,7 +29,8 @@ function results() {
             });
 
             if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+              navigate('/404');
+              //throw new Error(`HTTP error! Status: ${response.status}`);
             }
             setData(await response.json());
             console.log('Success:', data);

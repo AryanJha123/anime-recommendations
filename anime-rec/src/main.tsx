@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import './index.css'
 import App from './App.tsx'
 import Results from './results.tsx'
+import Error from './404.tsx'
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
   {
     path: "/results/:user",
     element: <Results />,
+  },
+  {
+    path: "/404",
+    element: <Error />,
   },
 ]);
 
